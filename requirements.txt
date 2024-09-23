@@ -1,0 +1,10 @@
+pyrogram
+aiogram
+environs
+tgcrypto
+gspread
+oauth2
+oauth2client
+gspread-formatting
+schedule
+apscheduler
