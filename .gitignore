@@ -4,3 +4,8 @@ credentials.json
 pyproject.toml
 poetry.lock
 session.session
+downloaded_tags.txt
+downloaded_usernames.txt
+last_used_limit.txt
+last_used_tags.txt
+last_used_usernames.txt
