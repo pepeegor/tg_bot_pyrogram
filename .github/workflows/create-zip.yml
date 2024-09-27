@@ -18,10 +18,26 @@ jobs:
     - name: Get latest tag
       id: get_tag
       run: |
+        # Получаем последний тег или используем v0.0.0 по умолчанию
         TAG=$(git describe --tags `git rev-list --tags --max-count=1` || echo "v0.0.0")
         echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
-        VERSION=$(echo $TAG | grep -oP '\d+\.\d+\.\d+' | awk -F. '{$NF+=1; OFS="."; print $0}')
-        echo "NEW_VERSION=v$VERSION" >> $GITHUB_ENV
+        
+        # Извлекаем числовую часть версии (например, 1.0.0)
+        VERSION=$(echo $TAG | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+        
+        # Разделяем версию на части
+        MAJOR=$(echo $VERSION | cut -d. -f1)
+        MINOR=$(echo $VERSION | cut -d. -f2)
+        PATCH=$(echo $VERSION | cut -d. -f3)
+        
+        # Увеличиваем PATCH (последнюю часть версии)
+        NEW_PATCH=$((PATCH + 1))
+        
+        # Формируем новую версию
+        NEW_VERSION="v$MAJOR.$MINOR.$NEW_PATCH"
+        
+        # Сохраняем новую версию в окружение
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
       
     - name: Create new tag
       run: |
