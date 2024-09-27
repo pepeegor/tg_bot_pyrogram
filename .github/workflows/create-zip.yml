@@ -13,15 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0
+        fetch-depth: 0  # Необходим для работы с тегами
 
     - name: Get latest tag
       id: get_tag
-      run: |
-        TAG=$(git describe --tags `git rev-list --tags --max-count=1` || echo "v0.0.0")
-        echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
-        VERSION=$(echo $TAG | awk -F. '{$NF+=1; OFS="."; print $0}')
-        echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
+      run: echo "NEW_VERSION=v1.0" >> $GITHUB_ENV
 
     - name: Create new tag
       run: |
