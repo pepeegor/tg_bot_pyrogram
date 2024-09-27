@@ -1,0 +1,24 @@
+name: Create ZIP Archive
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Create ZIP archive
+      run: |
+        zip -r my_project.zip . -x "*.git*" ".env" ".gitignore" "credentials.json" ".github/*"
+
+    - name: Upload ZIP as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: tg_bot
+        path: tg_bot.zip
