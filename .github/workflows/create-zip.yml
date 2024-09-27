@@ -15,14 +15,10 @@ jobs:
       with:
         fetch-depth: 0  # Необходим для работы с тегами
 
-    - name: Get latest tag
-      id: get_tag
-      run: echo "NEW_VERSION=v1.0" >> $GITHUB_ENV
-
     - name: Create new tag
       run: |
-        git tag ${{ env.NEW_VERSION }}
-        git push origin ${{ env.NEW_VERSION }}
+        git tagv1.0.0
+        git push origin v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -36,7 +32,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.NEW_VERSION }}
+        tag_name: v1.0.0
         release_name: "tg_bot release ${{ env.NEW_VERSION }}"
         draft: false
         prerelease: false
