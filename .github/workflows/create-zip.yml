@@ -48,7 +48,7 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        zip -r tg_bot.zip ./* -x "*.git*" ".env" ".gitignore" "credentials.json" ".github/**"
+        zip -r tg_bot.zip ./* -x "*.git*" "pyproject.toml" "poetry.lock" ".env" ".gitignore" "credentials.json" ".github/**"
 
     - name: Create GitHub Release
       id: create_release

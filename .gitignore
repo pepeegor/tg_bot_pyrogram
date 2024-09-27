@@ -1,8 +1,6 @@
 __pycache__
 credentials.json
 .env
-pyproject.toml
-poetry.lock
 session.session
 downloaded_tags.txt
 downloaded_usernames.txt
