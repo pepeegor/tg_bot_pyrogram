@@ -1,9 +1,9 @@
-name: Create ZIP Archive
+name: Create ZIP Archive and Release
 
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   build:
@@ -12,19 +12,34 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Необходим для работы с тегами
+
+    - name: Get latest tag
+      id: get_tag
+      run: |
+        TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+        echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
+        VERSION=$(echo $TAG | awk -F. '{$NF+=1; OFS="."; print $0}')
+        echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Create new tag
+      run: |
+        git tag ${{ env.NEW_VERSION }}
+        git push origin ${{ env.NEW_VERSION }}
 
     - name: Create ZIP archive
       run: |
         zip -r tg_bot.zip * -x "*.git*" ".env" ".gitignore" "credentials.json" ".github/*"
 
-     - name: Create GitHub Release
+    - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: "v1.0"  
-        release_name: "tg_bot release"
+        tag_name: ${{ env.NEW_VERSION }}
+        release_name: "tg_bot release ${{ env.NEW_VERSION }}"
         draft: false
         prerelease: false
 
