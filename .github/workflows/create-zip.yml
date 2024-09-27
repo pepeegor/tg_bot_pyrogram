@@ -21,7 +21,7 @@ jobs:
         TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
         VERSION=$(echo $TAG | awk -F. '{$NF+=1; OFS="."; print $0}')
-        echo "NEW_VERSION=VERSION" >> $GITHUB_ENV
+        echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
       
     - name: Create new tag
       run: |
