@@ -15,10 +15,10 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        zip -r tg_bot.zip . -x "*.git*" ".env" ".gitignore" "credentials.json" ".github/*"
+        zip -r tg_bot.zip * -x "*.git*" ".env" ".gitignore" "credentials.json" ".github/*"
 
     - name: Upload ZIP as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: tg_bot_archive
+        name: tg_bot 
         path: tg_bot.zip
