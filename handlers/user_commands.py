@@ -119,11 +119,6 @@ async def parse_chats_with_usernames(message: Message, bot: Bot, client: Client,
     # Разделяем юзернеймы по пробелам и переносам строк
     username_list = [username.strip() for username in usernames.split() if username.strip()]
 
-    # Проверяем, что количество юзернеймов не превышает 3
-    if len(username_list) > 3:
-        return await message.answer(
-            '<b>❌ Пожалуйста, введите не более 3 юзернеймов!</b>'
-        )
         
     async with aiofiles.open('data/last_used_usernames.txt', 'w', encoding='utf-8') as file:
         await file.write(usernames)
